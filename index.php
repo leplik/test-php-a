@@ -1,26 +1,11 @@
 <?php
-# Fill our vars and run on cli
-# $ php -f db-connect-test.php
 
-$dbname = 'app';
-$dbuser = 'app';
-$dbpass = 'password2';
-$dbhost = 'mysql-a';
-
-$connect = mysql_connect($dbhost, $dbuser, $dbpass) or die("Unable to Connect to '$dbhost'");
-mysql_select_db($dbname) or die("Could not open the db '$dbname'");
-
-$test_query = "SHOW TABLES FROM $dbname";
-$result = mysql_query($test_query);
-
-$tblCnt = 0;
-while($tbl = mysql_fetch_array($result)) {
-  $tblCnt++;
-  #echo $tbl[0]."<br />\n";
+$mysqli_connection = new MySQLi('mysql-a', 'app', 'password2', 'app');
+if ($mysqli_connection->connect_error) {
+   echo "Not connected, error: " . $mysqli_connection->connect_error;
+}
+else {
+   echo "Connected.";
 }
 
-if (!$tblCnt) {
-  echo "There are no tables<br />\n";
-} else {
-  echo "There are $tblCnt tables<br />\n";
-}
+?>
